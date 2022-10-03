@@ -70,5 +70,10 @@ namespace RnPnS
             }
             
         }
+
+        public void Start()
+        {
+            timer.Start();
+        }
     }
 }
