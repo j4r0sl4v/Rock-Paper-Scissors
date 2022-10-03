@@ -2,26 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+
 
 namespace RnPnS
 {
-    class Game
+    public class Game
     {
-        private Timer timer;
+        private DispatcherTimer timer;
         public Player Player1 { get; }
         public Player Player2 { get; }
+
+        public event Action FightFinished;
 
         public Game(int money)
         {
             Player1 = new Player(money);
             Player2 = new Player(money);
-            timer = new Timer(1000);
-            timer.Elapsed += Timer_Elapsed;
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            timer.Tick += Timer_Elapsed;
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void Timer_Elapsed(object sender, EventArgs e)
         {
             var p1 = Player1.GetState();
             var p2 = Player2.GetState();
@@ -68,6 +73,7 @@ namespace RnPnS
                     }
                 }
             }
+            FightFinished?.Invoke();
             
         }
 

@@ -25,7 +25,13 @@ namespace RnPnS
         {
             InitializeComponent();
             game = new Game(10);
+            game.FightFinished += Game_FightFinished;
             game.Start();
+        }
+
+        private void Game_FightFinished()
+        {
+            txtbx.Text += $"Player1 {game.Player1.Money} - Player2 {game.Player2.Money}\n";
         }
     }
 }
